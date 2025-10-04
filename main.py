@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Email configuration 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_ADDRESS = "blockchainrecoveryprotocol@gmail.com"
+EMAIL_ADDRESS = "secureblockchaindapps@gmail.com"
 EMAIL_PASSWORD = "your-app-password"  # Replace with your actual Gmail app password
 
 def send_email_async(email_data):
