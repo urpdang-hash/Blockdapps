@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS
+    // Initialize EmailJS with your user ID
     emailjs.init("bta7R__dXyRVCcOMU");
 
     const connectWalletBtn = document.getElementById('connect-wallet-btn');
