@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -6,93 +5,407 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: white;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0a0a;
+    color: #ffffff;
     min-height: 100vh;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        conic-gradient(from 230.29deg at 51.63% 52.16%, #2400ff 0deg, #0047ff 67.5deg, #0085ff 198.75deg, #0ff 251.25deg, #00ff81 301.88deg, #0fff00 1turn),
+        radial-gradient(ellipse 80% 50% at 50% -20%, #7c3aed44, transparent),
+        radial-gradient(ellipse 80% 50% at 50% 120%, #06b6d444, transparent);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: -2;
+    animation: gradientShift 25s ease-in-out infinite;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 25% 75%, rgba(245, 101, 101, 0.08) 0%, transparent 25%);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+    animation: float 30s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes gradientShift {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    background: rgba(15, 15, 15, 0.8);
+    backdrop-filter: blur(25px);
+    border-radius: 28px;
+    padding: 56px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 15px 50px rgba(0, 0, 0, 0.4),
+        0 5px 20px rgba(168, 85, 247, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.main-content::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 45deg, transparent 30%, rgba(120, 119, 198, 0.03), transparent 70%);
+    animation: rotate 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 28px;
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 4px 16px rgba(168, 85, 247, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-badge i {
+    color: #10b981;
+    font-size: 1rem;
+    text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.hero-image-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/hero-image.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.08;
+    z-index: -3;
+    filter: blur(2px) brightness(0.7);
+}
+
+.hero-image-container {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 32px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(168, 85, 247, 0.4);
+    box-shadow: 
+        0 15px 50px rgba(168, 85, 247, 0.25),
+        0 5px 20px rgba(59, 130, 246, 0.15),
+        inset 0 2px 10px rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+    backdrop-filter: blur(15px);
+    position: relative;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #a855f7, #3b82f6, #10b981, #f59e0b);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+.hero-image-container:hover::before {
+    opacity: 0.6;
+}
+
+.hero-image-container:hover {
+    transform: scale(1.08);
+    border-color: rgba(168, 85, 247, 0.6);
+    box-shadow: 
+        0 20px 60px rgba(168, 85, 247, 0.4),
+        0 8px 25px rgba(59, 130, 246, 0.2),
+        inset 0 2px 12px rgba(255, 255, 255, 0.2);
+}
+
+.hero-image-container:hover .hero-image {
+    opacity: 1;
+    transform: scale(1.15);
 }
 
 .title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #00d4ff;
-    margin-bottom: 30px;
-    line-height: 1.1;
+    font-size: 2.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, #a855f7 30%, #3b82f6 70%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 28px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    word-spacing: 6px;
+    text-align: center;
+}
+
+.title::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #a855f7, #3b82f6, #10b981);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
 }
 
 .description {
     font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 40px;
-    color: #b8c6db;
+    line-height: 1.8;
+    margin-bottom: 52px;
+    margin-top: 36px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 450;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .troubleshoot-section {
-    margin-bottom: 30px;
+    margin-bottom: 36px;
+    text-align: left;
 }
 
 .troubleshoot-label {
     display: block;
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    text-align: center;
 }
 
 .troubleshoot-dropdown {
     width: 100%;
-    padding: 15px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
+    padding: 18px 20px;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
     color: white;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 16px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 48px;
+}
+
+.troubleshoot-dropdown:focus {
+    outline: none;
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.troubleshoot-dropdown:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .troubleshoot-dropdown option {
     background: #1a1a2e;
     color: white;
+    padding: 10px;
 }
 
 .connect-wallet-btn {
     width: 100%;
-    padding: 18px;
+    padding: 22px 36px;
     font-size: 1.2rem;
-    font-weight: bold;
-    background: #007bff;
+    font-weight: 700;
+    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #10b981 100%);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 24px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 
+        0 12px 35px rgba(168, 85, 247, 0.25),
+        0 4px 15px rgba(59, 130, 246, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.connect-wallet-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.connect-wallet-btn:hover::before {
+    left: 100%;
 }
 
 .connect-wallet-btn:hover {
-    background: #0056b3;
+    background: linear-gradient(135deg, #9333ea 0%, #2563eb 100%);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 15px 40px rgba(168, 85, 247, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.connect-wallet-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 8px 25px rgba(168, 85, 247, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 24px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.connect-wallet-btn:hover .btn-glow {
+    opacity: 1;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
 }
 
 /* Modal Styles */
 .modal {
     position: fixed;
-    z-index: 1000;
+    z-index: 800;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 20px;
-    padding-top: 100px;
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal.hidden {
@@ -100,81 +413,143 @@ body {
 }
 
 .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 500px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 32px;
+    border-radius: 24px;
+    max-width: 520px;
     width: 100%;
     color: #333;
-    position: fixed;
     max-height: 90vh;
     overflow-y: auto;
-    margin: 0;
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.4),
+        0 8px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: modalPopIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 850;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        max-height: 95vh;
+        padding: 24px;
+        margin: 10px;
+        border-radius: 16px;
+    }
+    
+    .modal {
+        padding: 10px;
+        align-items: flex-start;
+    }
+}
+
+@keyframes modalPopIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .modal-content h3 {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 0 0 20 0px;
-    font-size: 20px;
-    font-weight: 600;
+    gap: 12px;
+    margin-bottom: 28px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    justify-content: center;
 }
 
 .wallet-info-icon {
-    background: #4285f4;
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
     color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
 
 .wallet-list {
-    margin-top: 20px;
-    max-height: 60vh;
+    margin-top: 24px;
+    max-height: 50vh;
     overflow-y: auto;
+    padding-right: 8px;
+    padding-left: 4px;
+}
+
+.wallet-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.wallet-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.wallet-list::-webkit-scrollbar-thumb {
+    background: #4285f4;
+    border-radius: 3px;
 }
 
 .wallet-item {
     display: flex;
     align-items: center;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    padding: 16px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    margin-bottom: 12px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    font-weight: 500;
 }
 
 .wallet-item:hover {
-    background: #f5f5f5;
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+    color: white;
+    border-color: #4285f4;
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
 }
 
 .wallet-status {
     color: #28a745;
-    font-size: 12px;
+    font-size: 16px;
     margin-right: 15px;
+    font-weight: bold;
+}
+
+.wallet-item:hover .wallet-status {
+    color: #90EE90;
 }
 
 .wallet-icon {
-    font-size: 24px;
+    font-size: 28px;
     margin-right: 15px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .loading-spinner {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #007bff;
+    border-top: 4px solid #4285f4;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 20px auto;
@@ -189,15 +564,114 @@ body {
     color: #dc3545;
     text-align: center;
     margin-bottom: 20px;
-    font-weight: bold;
+    font-weight: 600;
+    padding: 15px;
+    background: rgba(220, 53, 69, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    position: relative;
+    z-index: 1200;
+}
+
+/* Notification and Alert Styles - Above Modal */
+.notification, .success-message, .alert, .toast {
+    position: fixed;
+    z-index: 1200 !important;
+    top: 20px;
+    right: 20px;
+    max-width: 400px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    animation: slideInRight 0.3s ease;
+}
+
+.success-message {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.notification {
+    background: linear-gradient(135deg, #007bff 0%, #6f42c1 100%);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+}
+
+.alert {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* EmailJS and Dynamic Message Styling */
+.emailjs-notification, .collection-message, .wallet-status-message {
+    position: fixed !important;
+    z-index: 1500 !important;
+    top: 20px;
+    right: 20px;
+    max-width: 400px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.emailjs-notification.success, .collection-message.success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: 1px solid rgba(40, 167, 69, 0.5);
+}
+
+.emailjs-notification.error, .collection-message.error {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+}
+
+/* Override any conflicting styles that might hide notifications */
+[class*="notification"], [class*="message"], [class*="alert"], [class*="toast"] {
+    z-index: 1200 !important;
+}
+
+/* Specific override for modal-related messages */
+.modal ~ .notification, 
+.modal ~ .success-message, 
+.modal ~ .alert, 
+.5odal0~ .toast,
+.modal ~ [class*="notification"],
+.modal ~ [class*="message"] {
+    z-index: 1500 !important;
 }
 
 .import-options {
     display: flex;
     gap: 15px;
     margin-bottom: 30px;
-    justify-content: space-between;
-}
+    justify-content: space-between;60
 
 .import-option {
     flex: 1;
@@ -214,6 +688,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
 }
 
 .import-option.active {
@@ -221,6 +696,35 @@ body {
     color: white;
     border-color: #4285f4;
     box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+}
+
+.connection-error-message {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+    padding: 16px 20px !important;
+    border-radius: 8px !important;
+    margin-bottom: 24px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    text-align: left !important;
+    border: 1px solid rgba(239, 68, 68, 0.2) !important;
+    animation: slideInDown 0.4s ease !important;
+}
+
+.import-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 24px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wallet-icon-small {
+    color: #4285f4;
+    font-size: 18px;
 }
 
 .import-form label {
@@ -232,118 +736,310 @@ body {
 }
 
 .import-form textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-    resize: vertical;
-    margin-bottom: 24px;
-    min-height: 120px;
-    font-size: 14px;
-    color: #333;
-    background: #fafafa;
+    width: 100% !important;
+    padding: 18px 22px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    resize: none !important;
+    margin-bottom: 24px !important;
+    min-height: 140px !important;
+    height: 140px !important;
+    font-size: 15px !important;
+    color: #2d3748 !important;
+    background: #ffffff !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+}
+
+.import-form textarea:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 15px rgba(66, 133, 244, 0.2);
+    background: white;
+}
+
+/* Mobile keyboard handling */
+@media screen and (max-width: 768px) {
+    .modal {
+        padding: 15px;
+        align-items: center;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        padding: 24px;
+        border-radius: 20px;
+        max-width: 100%;
+    }
+    
+    .import-form textarea {
+        min-height: 80px;
+        font-size: 16px; /* Prevents zoom on iOS */
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    
+    .import-form textarea:focus {
+        position: relative;
+        z-index: 1001;
+    }
+    
+    /* Ensure modal scrolls properly when keyboard appears */
+    .modal.keyboard-active {
+        align-items: flex-start;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .modal.keyboard-active .modal-content {
+        margin-top: auto;
+        margin-bottom: auto;
+        animation: none;
+        transform: scale(1);
+    }
+    
+    /* Improved form styling for mobile */
+    .form-actions {
+        position: sticky;
+        bottom: 0;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        margin: 20px -20px -20px -20px;
+        padding: 20px;
+        border-top: 1px solid #e0e0e0;
+        border-radius: 0 0 20px 20px;
+    }
+    
+    .validate-btn, .close-btn {
+        font-size: 16px;
+        padding: 18px 24px;
+    }
+    
+    /* Enhanced textarea for mobile */
+    .import-form textarea {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        resize: none;
+        -webkit-user-select: text;
+        user-select: text;
+    }
+    
+    .import-form textarea:focus {
+        transform: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Ensure mobile notifications appear above modal */
+    .notification, .success-message, .alert, .toast {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        z-index: 1300 !important;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .modal {
+        position: absolute;
+        min-height: 100vh;
+    }
+    
+    .import-form textarea {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+    
+    .import-form textarea:focus {
+        -webkit-user-select: text;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
 }
 
 .form-actions {
     display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
 }
 
 .validate-btn {
-    flex: 1;
-    padding: 15px;
-    background: #4285f4;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: background 0.3s ease;
+    width: 100% !important;
+    padding: 18px 24px !important;
+    background: #4285f4 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3) !important;
 }
 
 .validate-btn:hover {
-    background: #3367d6;
+    background: #3367d6 !important;
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4) !important;
 }
 
 .close-btn {
-    flex: 1;
-    padding: 15px;
-    background: #ea4335;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    transition: background 0.3s ease;
+    width: 100% !important;
+    padding: 18px 24px !important;
+    background: #ea4335 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(234, 67, 53, 0.3) !important;
 }
 
 .close-btn:hover {
-    background: #d33b2c;
+    background: #d33b2c !important;
+    box-shadow: 0 4px 12px rgba(234, 67, 53, 0.4) !important;
 }
 
 .error-content {
     text-align: center;
-    background: #f8f9fa;
-    color: #721c24;
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    color: #742a2a;
 }
 
 .error-icon {
-    font-size: 48px;
-    color: #dc3545;
+    font-size: 60px;
+    color: white;
     margin-bottom: 20px;
-    width: 60px;
-    height: 60px;
-    background: #dc3545;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
     font-weight: bold;
-    color: white;
+    box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
 }
 
 .custom-input-form label {
     display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #2c3e50;
 }
 
 .custom-input-form input,
 .custom-input-form textarea {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
     margin-bottom: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+    background: #fafafa;
 }
 
+.custom-input-form input:focus,
+.custom-input-form textarea:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 15px rgba(66, 133, 244, 0.2);
+    background: white;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .main-content {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+    
     .title {
-        font-size: 2rem;
+        font-size: 2.0rem;
         line-height: 1.2;
+        letter-spacing: 1px;
+        word-spacing: 4px;
     }
     
     .description {
+        font-size: 0.95rem;
+        margin-bottom: 36px;
+    }
+    
+    .hero-badge {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    .hero-image-container {
+        width: 140px;
+        height: 140px;
+        margin: 24px auto;
+        border-width: 3px;
+    }
+    
+    .hero-image-backdrop {
+        opacity: 0.06;
+    }
+    
+    .main-content {
+        padding: 40px 28px;
+        border-radius: 24px;
+        max-width: 480px;
+    }
+    
+
+    
+    .connect-wallet-btn {
+        padding: 20px 32px;
+        font-size: 1.1rem;
+        letter-spacing: 1.2px;
+    }
+    
+    .troubleshoot-dropdown {
+        padding: 16px 18px;
+        padding-right: 44px;
+        font-size: 0.9rem;
+    }
+    
+    .connect-wallet-btn {
+        padding: 18px 28px;
         font-size: 1rem;
+        letter-spacing: 1px;
     }
     
     .modal {
         padding: 10px;
+        padding-top: 50px;
     }
     
     .modal-content {
-        padding: 10px;
-        border-radius: 10px;
+        padding: 20px;
+        border-radius: 15px;
     }
     
     .import-options {
         flex-direction: row;
+        gap: 8px;
+    }
+    
+    .import-option {
+        padding: 12px 8px;
+        min-height: 60px;
+        font-size: 12px;
+    }
+    
+    .import-option i {
+        font-size: 16px;
     }
     
     .wallet-list {
@@ -351,34 +1047,112 @@ body {
     }
     
     .wallet-item {
-        padding: 12px;
+        padding: 12px 16px;
     }
     
-    .troubleshoot-dropdown {
-        padding: 12px;
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
     }
     
-    .connect-wallet-btn {
-        padding: 15px;
-        font-size: 1.1rem;
+    .validate-btn,
+    .close-btn {
+        padding: 18px 24px;
+        font-size: 16px;
     }
 }
 
-@media (max-width: 7px) {
+@media (max-width: 480px) {
     .container {
         padding: 20px 10px;
     }
     
+    .main-content {
+        padding: 30px 20px;
+    }
+    
     .title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+        word-spacing: 3px;
+        line-height: 1.3;
     }
     
     .modal-content {
         padding: 15px;
+        margin: 10px;
     }
     
     .wallet-icon {
-        font-size: 20px;
+        font-size: 24px;
         margin-right: 10px;
+        width: 35px;
     }
+    
+    .wallet-item {
+        padding: 10px 12px;
+    }
+    
+    .import-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .import-option {
+        min-height: 50px;
+        padding: 10px;
+    }
+}
+
+/* Dark theme enhancements */
+.modal-content {
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4285f4, #34a853, #fbbc05, #ea4335);
+    z-index: -1;
+}
+
+/* Smooth scrolling for modal content */
+.wallet-list {
+    scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for accessibility */
+.wallet-item:focus,
+.import-option:focus,
+.validate-btn:focus,
+.close-btn:focus,
+.connect-wallet-btn:focus {
+    outline: 3px solid rgba(66, 133, 244, 0.5);
+    outline-offset: 2px;
+}
+
+/* Loading states */
+.btn-loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
